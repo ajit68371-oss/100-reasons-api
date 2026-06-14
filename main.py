@@ -1,10 +1,17 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import random
 
 app = FastAPI(
     title="100 Reasons API",
     description="A simple API showcasing 100 reasons to hire Praveen",
     version="1.1.0"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 reasons: list[str] = [
