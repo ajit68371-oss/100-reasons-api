@@ -113,16 +113,11 @@ reasons = [
 @app.get("/")
 def home():
     return {
-        "message": "Welcome to the 100 Reasons API",
+        "project": "100 Reasons API",
         "candidate": "Praveen",
-        "available_endpoints": [
-            "/why-hire/praveen",
-            "/why-hire/praveen/random",
-            "/why-hire/praveen/today",
-            "/why-hire/praveen/top10"
-        ]
+        "documentation": "/docs",
+        "github": "https://github.com/ajit68371-oss/100-reasons-api"
     }
-
 
 @app.get("/why-hire/praveen")
 def why_hire_praveen():
