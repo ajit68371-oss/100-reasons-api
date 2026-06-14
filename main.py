@@ -4,10 +4,10 @@ import random
 app = FastAPI(
     title="100 Reasons API",
     description="A simple API showcasing 100 reasons to hire Praveen",
-    version="1.0.0"
+    version="1.1.0"
 )
 
-reasons = [
+reasons: list[str] = [
     "Bridges business and technology effectively",
     "Understands both API consumption and API development",
     "Strong Martech platform expertise",
@@ -110,14 +110,37 @@ reasons = [
     "Continuously seeks opportunities to learn and improve"
 ]
 
+
 @app.get("/")
 def home():
     return {
         "project": "100 Reasons API",
         "candidate": "Praveen",
+        "title": "Business & Technology Consultant",
         "documentation": "/docs",
+        "about": "/about",
         "github": "https://github.com/ajit68371-oss/100-reasons-api"
     }
+
+
+@app.get("/about")
+def about():
+    return {
+        "project": "100 Reasons API",
+        "version": "1.1.0",
+        "author": "Praveen",
+        "purpose": "Showcasing professional strengths through a public REST API",
+        "technology": [
+            "Python",
+            "FastAPI",
+            "Uvicorn",
+            "Swagger/OpenAPI",
+            "GitHub",
+            "Render"
+        ],
+        "github": "https://github.com/ajit68371-oss/100-reasons-api"
+    }
+
 
 @app.get("/why-hire/praveen")
 def why_hire_praveen():
@@ -131,23 +154,49 @@ def why_hire_praveen():
 
 @app.get("/why-hire/praveen/random")
 def random_reason():
+
+    reason = random.choice(reasons)
+
     return {
         "candidate": "Praveen",
-        "reason": random.choice(reasons)
+        "reason_number": reasons.index(reason) + 1,
+        "reason": reason
     }
 
 
 @app.get("/why-hire/praveen/today")
 def reason_of_the_day():
+
+    reason = random.choice(reasons)
+
     return {
         "candidate": "Praveen",
-        "reason_of_the_day": random.choice(reasons)
+        "reason_number": reasons.index(reason) + 1,
+        "reason_of_the_day": reason
     }
 
 
 @app.get("/why-hire/praveen/top10")
 def top_ten():
+
+    numbered_reasons = []
+
+    for index, reason in enumerate(reasons[:10], start=1):
+        numbered_reasons.append({
+            "reason_number": index,
+            "reason": reason
+        })
+
     return {
         "candidate": "Praveen",
-        "top_10_reasons": reasons[:10]
+        "top_10_reasons": numbered_reasons
+    }
+
+
+@app.get("/why-hire/praveen/stats")
+def stats():
+    return {
+        "candidate": "Praveen",
+        "total_reasons": len(reasons),
+        "api_version": "1.1.0"
     }
